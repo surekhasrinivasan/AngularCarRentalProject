@@ -10,24 +10,22 @@
 <body>
     <h1 class="text-center text-success">Express Car Rental Company</h1>
     <div ng-controller="CarRentController as car">
-        <div ng-hide="carRental.car.unavailable">
-            <div ng-repeat = "product in car.products">
-                <div class="jumbotron">
-                  <h2 class="text-warning">{{ product.name }}</h2>
+        <div ng-repeat = "product in car.products">
+            <div class="jumbotron" ng-click="unavailable(product.type, product.available)">
+                <h2 class="text-warning">{{ product.type }}</h2>
                     <div class="row">
                         <div class="col-md-7">
-                            <p class="lead">{{ product.description }}</p>
-                            <h4 class="lead">Mileage: {{ product.mileage }}</h4><br>
-                            <h4>Rent/Day: {{ product.rentPrice | currency }}</h4><br>
-                            <h5 class="text-success">Cars Available: {{ product.available }}</h5>
+                            <p class="lead" ng-show="product.canRent">{{ product.description }}</p>
+                            <h4 class="lead" ng-show="product.canRent">Mileage: {{ product.mileage }}</h4><br>
+                            <h4 ng-show="product.canRent">Rent/Day: {{ product.rentPrice | currency }}</h4><br>
+                            <h5 class="text-success" ng-show="product.canRent">Cars Available: {{ product.available }}</h5>
+                            <h5 class="text-danger" ng-hide="product.canRent">Unvailable</h5>
                         </div>
                         <div class="col-md-5">
                             <img ng-src="{{ product.image }}" style="width:80%"/>
                         </div>
                     </div>
-                    <button ng-show="product.canRent" class="btn btn-outline-primary btn-lg">Rent-A-Car</button>
-                    <!--<a class="btn btn-primary btn-lg" href="#" role="button">Rent-A-Car</a>-->
-                </div>
+                <button ng-show="product.canRent" ng-click="rentAcar(product.type, product.available)" class="btn btn-outline-primary btn-lg">Rent-A-Car</button>
             </div>
         </div>
     </div>
